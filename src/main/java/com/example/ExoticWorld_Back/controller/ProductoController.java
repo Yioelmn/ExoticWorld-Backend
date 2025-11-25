@@ -2,7 +2,6 @@ package com.example.ExoticWorld_Back.controller;
 
 import java.util.List;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,12 +13,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 import com.example.ExoticWorld_Back.model.ProductoModel;
 import com.example.ExoticWorld_Back.service.ProductoService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 
 @RestController
@@ -28,9 +28,6 @@ public class ProductoController {
 
     @Autowired
     private ProductoService productoService;
-
-    /*@Autowired
-    private CategoriaService categoriaService; */
 
     @GetMapping
     @Operation(summary = "Lista todos los productos", description = "Obtiene todos los productos disponibles")
@@ -82,17 +79,4 @@ public class ProductoController {
         List<ProductoModel> productos = productoService.buscarPorNombre(nombre);
         return productos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(productos);
     }
-    
-    /*
-    PARA CUANDO HAGA CATEGORIA    
-    @GetMapping("/buscar/categoria")
-    @Operation(summary = "Filtra productos por categoría", description = "Filtra todos los productos que pertenecen a una categoría")
-    public ResponseEntity<List<Producto>> buscarPorCategoria(@RequestParam Integer categoriaId) {
-    Categoria categoria = categoriaService.obtenerPorId(categoriaId);
-        if (categoria == null) {
-            return ResponseEntity.notFound().build();
-        }
-        List<Producto> productos = productoService.buscarPorCategoria(categoria);
-        return productos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(productos);
-    } */
 }

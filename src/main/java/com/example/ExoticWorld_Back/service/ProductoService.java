@@ -36,7 +36,6 @@ public class ProductoService {
             existente.setNombreProducto(producto.getNombreProducto());
             existente.setDescripcionProducto(producto.getDescripcionProducto());
             existente.setPrecioProducto(producto.getPrecioProducto());
-            /*existente.setCategoria(producto.getCategoria());*/
 
             return productoRepository.save(existente);
     }
@@ -56,8 +55,6 @@ public class ProductoService {
                 existente.setDescripcionProducto(productoParcial.getDescripcionProducto());
             if(productoParcial.getPrecioProducto() != null)
                 existente.setPrecioProducto(productoParcial.getPrecioProducto());
-            /*if (productoParcial.getCategoria() != null)
-                existente.setCategoria(productoParcial.getCategoria());*/
             return guardar(existente);
         }
         return null;

@@ -12,7 +12,4 @@ public interface ProductoRepository extends JpaRepository<ProductoModel, Integer
 
     List<ProductoModel> findByNombreProductoContainingIgnoreCase(String nombreProducto);
 
-    /* aquí buscamos el producto por categoría omg
-    List<Producto> findByCategoria(Categoria categoria); */
-    
 }
