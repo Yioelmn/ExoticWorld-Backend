@@ -17,44 +17,48 @@ public class ProductoService {
     @Autowired
     private ProductoRepository productoRepository;
 
-    public List<ProductoModel> listar(){
+    public List<ProductoModel> listar() {
         return productoRepository.findAll();
     }
 
-    public ProductoModel obtenerPorId (Integer id){
+    public ProductoModel obtenerPorId(Integer id) {
         return productoRepository.findById(id).orElse(null);
     }
 
-    public ProductoModel guardar(ProductoModel producto){
+    public ProductoModel guardar(ProductoModel producto) {
         return productoRepository.save(producto);
     }
 
-    public ProductoModel actualizarTodo(Integer id, ProductoModel producto){
+    public ProductoModel actualizarTodo(Integer id, ProductoModel producto) {
         ProductoModel existente = productoRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
-        
-            existente.setNombreProducto(producto.getNombreProducto());
-            existente.setDescripcionProducto(producto.getDescripcionProducto());
-            existente.setPrecioProducto(producto.getPrecioProducto());
 
-            return productoRepository.save(existente);
+        existente.setNombreProducto(producto.getNombreProducto());
+        existente.setDescripcionProducto(producto.getDescripcionProducto());
+        existente.setPrecioProducto(producto.getPrecioProducto());
+        existente.setCategoriaId(producto.getCategoriaId());
+
+        return productoRepository.save(existente);
     }
 
-    public void eliminar(Integer id){
+    public void eliminar(Integer id) {
         ProductoModel producto = productoRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
         productoRepository.delete(producto);
     }
-    
-    public ProductoModel patchProducto(Integer id, ProductoModel productoParcial){
+
+    public ProductoModel patchProducto(Integer id, ProductoModel productoParcial) {
         ProductoModel existente = obtenerPorId(id);
-        if(existente != null) {
-            if(productoParcial.getNombreProducto() != null)
+        if (existente != null) {
+            if (productoParcial.getNombreProducto() != null)
                 existente.setNombreProducto(productoParcial.getNombreProducto());
-            if(productoParcial.getDescripcionProducto() != null)
+            if (productoParcial.getDescripcionProducto() != null)
                 existente.setDescripcionProducto(productoParcial.getDescripcionProducto());
-            if(productoParcial.getPrecioProducto() != null)
+            if (productoParcial.getPrecioProducto() != null)
                 existente.setPrecioProducto(productoParcial.getPrecioProducto());
+            if (productoParcial.getCategoriaId() != null)
+                existente.setCategoriaId(productoParcial.getCategoriaId());
+
             return guardar(existente);
         }
         return null;

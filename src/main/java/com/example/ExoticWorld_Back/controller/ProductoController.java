@@ -4,17 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.*;
 
 import com.example.ExoticWorld_Back.model.ProductoModel;
 import com.example.ExoticWorld_Back.service.ProductoService;
@@ -33,14 +23,14 @@ public class ProductoController {
     @Operation(summary = "Lista todos los productos", description = "Obtiene todos los productos disponibles")
     public ResponseEntity<List<ProductoModel>> listar() {
         List<ProductoModel> productos = productoService.listar();
-        return productos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(productos);
+        return productos.isEmpty() ? ResponseEntity.noContent().build(): ResponseEntity.ok(productos);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Lista productos por su id", description = "busca productos por su identificador unico")
-    public ResponseEntity<ProductoModel> obtenerPorId(@PathVariable Integer id){
+    public ResponseEntity<ProductoModel> obtenerPorId(@PathVariable Integer id) {
         ProductoModel producto = productoService.obtenerPorId(id);
-        return producto != null ?  ResponseEntity.ok(producto) : ResponseEntity.notFound().build();
+        return producto != null ? ResponseEntity.ok(producto) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -52,23 +42,29 @@ public class ProductoController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualiza un producto", description = "Modifica productos especificos mediante su identificador unico")
-    public ResponseEntity<ProductoModel> actualizar(@PathVariable Integer id, @Valid @RequestBody ProductoModel producto) {
+    public ResponseEntity<ProductoModel> actualizar(
+            @PathVariable Integer id,
+            @Valid @RequestBody ProductoModel producto) {
+
         ProductoModel actualizado = productoService.actualizarTodo(id, producto);
         return actualizado != null ? ResponseEntity.ok(actualizado) : ResponseEntity.notFound().build();
     }
 
     @PatchMapping("/{id}")
     @Operation(summary = "Actualiza productos parcialmente", description = "Modifica productos parcialmente mediante su identificador unico")
-    public ResponseEntity<ProductoModel> patch(@PathVariable Integer id, @RequestBody ProductoModel producto) {
+    public ResponseEntity<ProductoModel> patch(
+            @PathVariable Integer id,
+            @RequestBody ProductoModel producto) {
+
         ProductoModel actualizado = productoService.patchProducto(id, producto);
         return actualizado != null ? ResponseEntity.ok(actualizado) : ResponseEntity.notFound().build();
     }
-    
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Elimina un producto", description = "Elimina un producto en especifico mediante su identificador unico")
-    public ResponseEntity<Void> eliminar(@PathVariable Integer id){
+    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
         ProductoModel producto = productoService.obtenerPorId(id);
-        if(producto == null) return ResponseEntity.notFound().build();
+        if (producto == null) return ResponseEntity.notFound().build();
         productoService.eliminar(id);
         return ResponseEntity.noContent().build();
     }

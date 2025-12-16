@@ -22,7 +22,7 @@ public class ProductoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer producto_id;
-    
+
     @NotBlank(message = "El nombre del producto es obligatorio")
     @Column(length = 35, nullable = false)
     private String nombreProducto;
@@ -33,6 +33,9 @@ public class ProductoModel {
 
     @NotNull(message = "El precio no puede estar vacío")
     @Column(nullable = false)
-    private Double precioProducto;
+    private Integer precioProducto;
 
+    @NotNull(message = "La categoría no puede estar vacía")
+    @Column(name = "categoria_id", nullable = false)
+    private Integer categoriaId;
 }
